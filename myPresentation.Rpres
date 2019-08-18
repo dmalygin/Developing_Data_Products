@@ -1,0 +1,119 @@
+Course Project: Shiny Application and Reproducible Pitch
+========================================================
+author: DMalygin
+date: 08/17/2019
+autosize: true
+
+Overview
+========================================================
+<style>
+.reveal h4 {font-size: 25px; color: blue;}
+.reveal ul, .reveal ol {font-size: 20px;}
+</style>
+
+#### The goals of the application:
+- Demonstrate usage of:
+  + Shiny control elements such as sliders, radiobattons
+  + Shiny widgets such as barplots, tables
+
+#### To demonstrate work of the aplication the following elements were implemented:
+- UI part:
+  + Setting of ranges with sliders
+  + Sorting variants of data frame columns with radiobuttons
+  
+- Server part:
+  + Interactive Bar plotting
+  + Interactive Table creation
+
+
+
+Data
+========================================================
+class: small-code
+<style>
+.small-code pre code {font-size: 20px;}
+.reveal h4 {font-size: 25px;}
+</style>
+
+#### Data used in this project shows USA cities with highest crime rate per state:
+```{r}
+shinyCrimeRatesDataFrame <- read.csv(file="CitiesCrimeRates.csv", header=TRUE, sep=",")
+
+head(shinyCrimeRatesDataFrame)
+```
+
+#### It was taken from:
+#### 1. https://ucr.fbi.gov/crime-in-the-u.s/2018/preliminary-report/tables (table 4; Offenses Reported to Law Enforcement, by State by City 100,000 and over in population) https://ucr.fbi.gov/crime-in-the-u.s/2018/preliminary-report/ (describtion of the data and specific assumptions)
+#### 2. https://www.downloadexcelfiles.com/wo_en/download-list-latitutelongitude-cities-usa (MS Excel(2007); List of Latitude/Longitude of Cities of USA)
+
+#### *Information about data preparation can be obtained here: http://rpubs.com/DMalygin/crime_rates
+
+
+
+
+Work of the application
+========================================================
+class: small-code
+<style>
+.small-code pre code {font-size: 20px;}
+.reveal h4 {font-size: 25px; color: black;}
+</style>
+#### Since the goal of the project was to study how to build the Shine application, the work of the one is intuitively understandable going to the link: https://dmalygin.shinyapps.io/myapp/
+
+#### The most interesting part of the application is interaction between UI and Server part in order to subset and order the data frame for plotting (shortened version of the reactive element):
+```{r}
+    #subsetDataFrame <- reactive({
+    #    
+    #    #subsetting
+    #    subsettedDataFrame <- (subset(shinyCrimeRatesDataFrame,
+    #            shinyCrimeRatesDataFrame$Population >= input$populationRange[1] & 
+    #                shinyCrimeRatesDataFrame$Population <= input$populationRange[2] &
+    #                shinyCrimeRatesDataFrame$Crime_Rate >= input$crimeRateRange[1] &
+    #                shinyCrimeRatesDataFrame$Crime_Rate <= input$crimeRateRange[2]))
+    #    
+    #    
+    #    # sorting
+    #    if(input$sorting == "Crime_Rate") {
+    #        sortByColumn <- subsettedDataFrame$Crime_Rate
+    #    }
+    #    
+    #    # output
+    #    subsettedDataFrame[order(sortByColumn), ]
+    #})
+```
+
+
+Output
+========================================================
+class: small-code
+<style>
+.small-code pre code {font-size: 15px;}
+.reveal h4 {font-size: 15px; color: black;}
+</style>
+#### As a result of the application work the following plot is built (default version).
+#### Since the application uses reactive element the plot rebuilds when range and sorting parameters changes.
+
+```{r out.height="350px",out.width="500px", out.align="center"}
+shinyCrimeRatesDataFrame <- read.csv(file="CitiesCrimeRates.csv", header=TRUE, sep=",")
+
+barplot(shinyCrimeRatesDataFrame$Crime_Rate,
+                names.arg = shinyCrimeRatesDataFrame$City,
+                main="Crime rate, per 100k people",
+                ylab="Crime rate, per 100k people",
+                cex.names=0.7,
+                las=2)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
