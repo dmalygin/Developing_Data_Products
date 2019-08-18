@@ -50,6 +50,12 @@ shinyServer(function(input, output) {
                 ylim = range(pretty(c(0, max(subsetDataFrame()[, 4])))),
                 cex.names = 0.7,
                 las = 2)
+        if(input$sorting == "Crime_Rate") {
+            medHigh <- median(subsetDataFrame()$Crime_Rate)
+            abline(h = medHigh, col="red", lwd=3, lty=2)
+            text(medHigh + 40, capture.output(cat('               
+                                                  Median (crime rate) = ', medHigh)), col = "red")
+        }
     })
     
     # output table
